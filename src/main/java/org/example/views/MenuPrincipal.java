@@ -140,7 +140,12 @@ public class MenuPrincipal extends JFrame {
         JPanel btnLogin = new JPanel();
         btnLogin.setBounds(754, 300, 83, 70);
         btnLogin.addMouseListener(new MouseAdapter() {
-            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Login login = new Login();
+                login.setVisible(true);
+                dispose();
+            }
         });
         btnLogin.setLayout(null);
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
