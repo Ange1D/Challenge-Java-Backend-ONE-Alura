@@ -240,7 +240,9 @@ public class Login extends JFrame {
         String contrase=new String (txtContrasena.getPassword());
 
         if(txtUsuario.getText().equals(Usuario) && contrase.equals(Password)){
-
+            MenuUsuario menu = new MenuUsuario();
+            menu.setVisible(true);
+            dispose();
         }else {
             JOptionPane.showMessageDialog(this, "Usuario o Contrase\u00F1a incorrectos");
         }
