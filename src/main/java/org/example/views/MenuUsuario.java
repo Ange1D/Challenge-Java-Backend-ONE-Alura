@@ -130,7 +130,9 @@ public class MenuUsuario extends JFrame {
             }
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                Busqueda busqueda = new Busqueda();
+                busqueda.setVisible(true);
+                dispose();
             }
         });
         btnBusqueda.setBounds(0, 312, 257, 56);
