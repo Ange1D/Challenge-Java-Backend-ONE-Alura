@@ -1,5 +1,7 @@
 package org.example.views;
 
+import org.example.jdbc.controller.UserController;
+
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -234,12 +236,12 @@ public class Login extends JFrame {
     }
 
     private void Login() {
-        String Usuario= "admin";
-        String Password="admin";
+        String User= getUser();
+        String Password=getPassword();
 
-        String contrase=new String (txtContrasena.getPassword());
+        UserController login = new UserController();
 
-        if(txtUsuario.getText().equals(Usuario) && contrase.equals(Password)){
+        if(login.Login(User,Password)){
             MenuUsuario menu = new MenuUsuario();
             menu.setVisible(true);
             dispose();
@@ -256,5 +258,13 @@ public class Login extends JFrame {
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
+    }
+
+    public String getUser() {
+        return txtUsuario.getText();
+    }
+
+    public String getPassword() {
+        return new String(txtContrasena.getPassword());
     }
 }
