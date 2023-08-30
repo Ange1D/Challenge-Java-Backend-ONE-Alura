@@ -11,6 +11,9 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+import org.example.jdbc.controller.ReservasController;
+import org.example.jdbc.model.Reserva;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +24,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.util.Calendar;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -37,6 +41,8 @@ public class ReservasView extends JFrame {
     int xMouse, yMouse;
     private JLabel labelExit;
     private JLabel labelAtras;
+
+    private ReservasController reservasController;
 
     /**
      * Launch the application.
@@ -59,6 +65,9 @@ public class ReservasView extends JFrame {
      */
     public ReservasView() {
         super("Reserva");
+
+        this.reservasController = new ReservasController();
+
         setIconImage(Toolkit.getDefaultToolkit().getImage(ReservasView.class.getResource("/imagenes/aH-40px.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 910, 560);
@@ -259,6 +268,11 @@ public class ReservasView extends JFrame {
         panel.add(txtFechaEntrada);
 
         txtFechaSalida = new JDateChooser();
+        txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                calcularValor(txtFechaEntrada, txtFechaSalida);
+            }
+        });
         //txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/imagenes/icon-reservas.png")));
         txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/icon-reservas.png"))));
         txtFechaSalida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
@@ -301,8 +315,9 @@ public class ReservasView extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
-                    RegistroHuesped registro = new RegistroHuesped();
-                    registro.setVisible(true);
+                    guardarReserva();
+                    //RegistroHuesped registro = new RegistroHuesped();
+                    //registro.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
                 }
@@ -328,5 +343,36 @@ public class ReservasView extends JFrame {
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
+    }
+
+    private void guardarReserva() {
+        String fechaE = ((JTextField)txtFechaEntrada.getDateEditor().getUiComponent()).getText();
+        String fechaS = ((JTextField)txtFechaSalida.getDateEditor().getUiComponent()).getText();
+        Reserva nuevaReserva = new Reserva(java.sql.Date.valueOf(fechaE), java.sql.Date.valueOf(fechaS),txtValor.getText(),txtFormaPago.getSelectedItem().toString());
+        reservasController.guardar(nuevaReserva);
+
+        JOptionPane.showMessageDialog(null, "Registro Guardado con \u00E9xito " + nuevaReserva.getId());
+
+        RegistroHuesped huesped = new RegistroHuesped(nuevaReserva.getId());
+        huesped.setVisible(true);
+        dispose();
+    }
+
+
+    private void calcularValor(JDateChooser fechaE,JDateChooser fechaS) {
+        if(fechaE.getDate() != null && fechaS.getDate() !=null) {
+            Calendar inicio = fechaE.getCalendar();
+            Calendar fin = fechaS.getCalendar();
+            int dias = -1; // Usamos -1 para contar a partir del dia siguiente
+            int diaria = 500;
+            int valor;
+
+            while(inicio.before(fin)||inicio.equals(fin)) {
+                dias++;
+                inicio.add(Calendar.DATE,1); //dias a ser aumentados
+            }
+            valor = dias * diaria;
+            txtValor.setText("$" + valor);
+        }
     }
 }
