@@ -38,6 +38,9 @@ public class Busqueda extends JFrame {
     private ReservasController reservaController;
     private HuespedesController huespedesController;
 
+    String reserva;
+    String huesped;
+
     /**
      * Launch the application.
      */
@@ -287,6 +290,47 @@ public class Busqueda extends JFrame {
         btnEliminar.setLayout(null);
         btnEliminar.setBackground(new Color(12, 138, 199));
         btnEliminar.setBounds(767, 508, 122, 35);
+        btnEliminar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int filaReservas = tbReservas.getSelectedRow();
+                int filaHuespedes = tbHuespedes.getSelectedRow();
+
+                if (filaReservas >= 0) {
+
+                    reserva = tbReservas.getValueAt(filaReservas, 0).toString();
+                    int confirmar = JOptionPane.showConfirmDialog(null, "\u00BFDesea Eliminar los datos?");
+
+                    if(confirmar == JOptionPane.YES_OPTION){
+
+                        String valor = tbReservas.getValueAt(filaReservas, 0).toString();
+                        reservaController.Eliminar(Integer.valueOf(valor));
+                        JOptionPane.showMessageDialog(contentPane, "Registro Eliminado");
+                        limpiarTabla();
+                        LlenarTablaReservas();
+                        LlenarTablaHuespedes();
+                    }
+                }
+
+                else if (filaHuespedes >= 0) {
+
+                    huesped = tbHuespedes.getValueAt(filaHuespedes, 0).toString();
+                    int confirmarh = JOptionPane.showConfirmDialog(null, "\u00BFDesea Eliminar los datos?");
+
+                    if(confirmarh == JOptionPane.YES_OPTION){
+
+                        String valor = tbHuespedes.getValueAt(filaHuespedes, 0).toString();
+                        huespedesController.Eliminar(Integer.valueOf(valor));
+                        JOptionPane.showMessageDialog(contentPane, "Registro Eliminado");
+                        limpiarTabla();
+                        LlenarTablaHuespedes();
+                        LlenarTablaReservas();
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(null, "Error fila no seleccionada, por favor realice una busqueda y seleccione una fila para eliminar");
+                }
+            }
+        });
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         contentPane.add(btnEliminar);
 
