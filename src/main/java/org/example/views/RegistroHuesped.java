@@ -16,33 +16,28 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.SystemColor;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.text.Format;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 
-@SuppressWarnings("serial")
 public class RegistroHuesped extends JFrame {
 
-    private JPanel contentPane;
-    private JTextField txtNombre;
-    private JTextField txtApellido;
-    private JTextField txtTelefono;
-    private JTextField txtNreserva;
-    private JDateChooser txtFechaN;
-    private JComboBox<Format> txtNacionalidad;
-    private JLabel labelExit;
-    private JLabel labelAtras;
+    private final JTextField txtNombre;
+    private final JTextField txtApellido;
+    private final JTextField txtTelefono;
+    private final JTextField txtNreserva;
+    private final JDateChooser txtFechaN;
+    private final JComboBox<Format> txtNacionalidad;
+    private final JLabel labelExit;
+    private final JLabel labelAtras;
     int xMouse, yMouse;
 
-    private HuespedesController huespedesController;
+    private final HuespedesController huespedesController;
 
     /**
      * Launch the application.
@@ -69,7 +64,7 @@ public class RegistroHuesped extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 910, 634);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBackground(SystemColor.text);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -154,7 +149,7 @@ public class RegistroHuesped extends JFrame {
         txtFechaN.setDateFormatString("yyyy-MM-dd");
         contentPane.add(txtFechaN);
 
-        txtNacionalidad = new JComboBox();
+        txtNacionalidad = new JComboBox<>();
         txtNacionalidad.setBounds(560, 350, 289, 36);
         txtNacionalidad.setBackground(SystemColor.text);
         txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 16));

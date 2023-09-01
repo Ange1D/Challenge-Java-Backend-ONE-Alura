@@ -16,11 +16,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
-@SuppressWarnings("serial")
 public class MenuPrincipal extends JFrame {
 
-    private JPanel contentPane;
-    private JLabel labelExit;
+    private final JLabel labelExit;
     int xMouse, yMouse;
 
     /**
@@ -47,7 +45,7 @@ public class MenuPrincipal extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/aH-40px.png")));
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setBounds(100, 100, 910, 537);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);

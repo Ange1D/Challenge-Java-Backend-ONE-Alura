@@ -23,11 +23,10 @@ public class Login extends JFrame {
      *
      */
     private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextField txtUsuario;
-    private JPasswordField txtContrasena;
+    private final JTextField txtUsuario;
+    private final JPasswordField txtContrasena;
     int xMouse, yMouse;
-    private JLabel labelExit;
+    private final JLabel labelExit;
 
     /**
      * Launch the application.
@@ -53,7 +52,7 @@ public class Login extends JFrame {
         setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 788, 527);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);

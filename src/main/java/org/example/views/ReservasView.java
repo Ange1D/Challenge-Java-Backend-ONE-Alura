@@ -17,7 +17,6 @@ import org.example.jdbc.model.Reserva;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.text.Format;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -25,24 +24,23 @@ import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Calendar;
+import java.util.Objects;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 
-@SuppressWarnings("serial")
 public class ReservasView extends JFrame {
 
-    private JPanel contentPane;
     public static JTextField txtValor;
     public static JDateChooser txtFechaEntrada;
     public static JDateChooser txtFechaSalida;
     public static JComboBox<String> txtFormaPago;
     int xMouse, yMouse;
-    private JLabel labelExit;
-    private JLabel labelAtras;
+    private final JLabel labelExit;
+    private final JLabel labelAtras;
 
-    private ReservasController reservasController;
+    private final ReservasController reservasController;
 
     /**
      * Launch the application.
@@ -72,7 +70,7 @@ public class ReservasView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 910, 560);
         setResizable(false);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBackground(SystemColor.control);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -302,12 +300,12 @@ public class ReservasView extends JFrame {
         txtValor.setColumns(10);
 
 
-        txtFormaPago = new JComboBox();
+        txtFormaPago = new JComboBox<>();
         txtFormaPago.setBounds(68, 417, 289, 38);
         txtFormaPago.setBackground(SystemColor.text);
         txtFormaPago.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
         txtFormaPago.setFont(new Font("Roboto", Font.PLAIN, 16));
-        txtFormaPago.setModel(new DefaultComboBoxModel(new String[] {"Tarjeta de Credito", "Tarjeta de Debito", "Dinero en efectivo"}));
+        txtFormaPago.setModel(new DefaultComboBoxModel<>(new String[] {"Tarjeta de Credito", "Tarjeta de Debito", "Dinero en efectivo"}));
         panel.add(txtFormaPago);
 
         JPanel btnsiguiente = new JPanel();
@@ -348,7 +346,7 @@ public class ReservasView extends JFrame {
     private void guardarReserva() {
         String fechaE = ((JTextField)txtFechaEntrada.getDateEditor().getUiComponent()).getText();
         String fechaS = ((JTextField)txtFechaSalida.getDateEditor().getUiComponent()).getText();
-        Reserva nuevaReserva = new Reserva(java.sql.Date.valueOf(fechaE), java.sql.Date.valueOf(fechaS),txtValor.getText(),txtFormaPago.getSelectedItem().toString());
+        Reserva nuevaReserva = new Reserva(java.sql.Date.valueOf(fechaE), java.sql.Date.valueOf(fechaS),txtValor.getText(), Objects.requireNonNull(txtFormaPago.getSelectedItem()).toString());
         reservasController.guardar(nuevaReserva);
 
         JOptionPane.showMessageDialog(null, "Registro Guardado con \u00E9xito " + nuevaReserva.getId());

@@ -10,7 +10,7 @@ import org.example.jdbc.model.Huesped;
 
 
 public class HuespedesController {
-    private HuespedDAO huespedDAO;
+    private final HuespedDAO huespedDAO;
 
     public HuespedesController() {
         Connection connection = new ConnectionFactory().recuperarConexion();

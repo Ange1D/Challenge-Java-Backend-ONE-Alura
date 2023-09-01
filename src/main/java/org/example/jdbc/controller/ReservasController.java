@@ -9,7 +9,7 @@ import org.example.jdbc.factory.ConnectionFactory;
 import org.example.jdbc.model.Reserva;
 
 public class ReservasController {
-    private ReservaDAO reservaDAO;
+    private final ReservaDAO reservaDAO;
 
     public ReservasController() {
         Connection connection = new ConnectionFactory().recuperarConexion();

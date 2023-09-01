@@ -10,33 +10,29 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.List;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.Optional;
 
-@SuppressWarnings("serial")
 public class Busqueda extends JFrame {
 
-    private JPanel contentPane;
-    private JTextField txtBuscar;
-    private JTable tbHuespedes;
-    private JTable tbReservas;
-    private DefaultTableModel modelo;
-    private DefaultTableModel modeloHuesped;
-    private JLabel labelAtras;
-    private JLabel labelExit;
+    private final JPanel contentPane;
+    private final JTextField txtBuscar;
+    private final JTable tbHuespedes;
+    private final JTable tbReservas;
+    private final DefaultTableModel modelo;
+    private final DefaultTableModel modeloHuesped;
+    private final JLabel labelAtras;
+    private final JLabel labelExit;
     int xMouse, yMouse;
 
-    private ReservasController reservaController;
-    private HuespedesController huespedesController;
+    private final ReservasController reservaController;
+    private final HuespedesController huespedesController;
 
     String reserva;
     String huesped;
@@ -455,7 +451,7 @@ public class Busqueda extends JFrame {
                     Integer idReserva = Integer.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 6).toString());
                     Integer id = Integer.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
                     this.huespedesController.actualizar(nombre,apellido,fechaN, nacionalidad, telefono, idReserva, id);
-                    JOptionPane.showMessageDialog(this, String.format("Registro modificado con \u00E9xito"));
+                    JOptionPane.showMessageDialog(this, "Registro modificado con \u00E9xito");
                 }, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un registro"));
 
     }

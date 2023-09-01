@@ -54,12 +54,9 @@ public class User {
             return false;
         }finally {
             try {
-                if (result != null)
-                    result.close();
-                if (state != null);
-                state.close();
-                if (connec != null);
-                connec.close();
+                if (result != null) result.close();
+                if (state != null) state.close();
+                if (connec != null) connec.close();
             } catch (SQLException e2) {
                 e2.printStackTrace();
             }

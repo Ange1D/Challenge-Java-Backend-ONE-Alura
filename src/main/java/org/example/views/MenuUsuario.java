@@ -6,13 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseMotionAdapter;
@@ -21,13 +18,10 @@ import java.util.Date;
 import java.awt.SystemColor;
 import javax.swing.JSeparator;
 
-@SuppressWarnings("serial")
 public class MenuUsuario extends JFrame {
 
-    private JPanel contentPane;
     int xMouse, yMouse;
-    private JLabel labelExit;
-    private JLabel labelRegistro;
+    private final JLabel labelExit;
 
     /**
      * Launch the application.
@@ -52,7 +46,7 @@ public class MenuUsuario extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(MenuUsuario.class.getResource("/imagenes/aH-40px.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 944, 609);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -109,7 +103,7 @@ public class MenuUsuario extends JFrame {
         panelMenu.add(btnRegistro);
         btnRegistro.setLayout(null);
 
-        labelRegistro = new JLabel("Registro de reservas");
+        JLabel labelRegistro = new JLabel("Registro de reservas");
         //labelRegistro.setIcon(new ImageIcon(MenuUsuario.class.getResource("/imagenes/reservado.png")));
         labelRegistro.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/reservado.png"))));
         labelRegistro.setForeground(SystemColor.text);

@@ -5,10 +5,10 @@ import java.sql.Date;
 public class Reserva {
 
     private Integer id;
-    private Date fechaE;
-    private Date fechaS;
-    private String valor;
-    private String formaPago;
+    private final Date fechaE;
+    private final Date fechaS;
+    private final String valor;
+    private final String formaPago;
 
 
     public Reserva(Date fechaE, Date fechaS, String valor, String formaPago) {

@@ -12,7 +12,7 @@ import org.example.jdbc.model.Reserva;
 
 public class ReservaDAO {
 
-    private Connection connection;
+    private final Connection connection;
 
     public ReservaDAO(Connection connection) {
         this.connection = connection;

@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.example.jdbc.model.Huesped;
-import org.example.jdbc.model.Reserva;
 
 
 public class HuespedDAO {
-    private Connection connection;
+    private final Connection connection;
 
     public HuespedDAO(Connection connection) {
         this.connection = connection;
