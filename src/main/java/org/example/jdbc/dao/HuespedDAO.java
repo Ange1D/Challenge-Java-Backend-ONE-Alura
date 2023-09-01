@@ -65,7 +65,7 @@ public class HuespedDAO {
         List<Huesped> huespedes = new ArrayList<Huesped>();
         try {
 
-            String sql = "SELECT id, nombre, apellido, fecha_nacimiento, nacionalidad, telefono, id_reserva FROM huespedes WHERE idReserva = ?";
+            String sql = "SELECT id, nombre, apellido, fecha_nacimiento, nacionalidad, telefono, id_reserva FROM huespedes WHERE id_reserva = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, id);
