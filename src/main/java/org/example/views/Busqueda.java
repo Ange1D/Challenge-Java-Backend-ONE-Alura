@@ -6,30 +6,21 @@ import org.example.jdbc.model.Huesped;
 import org.example.jdbc.model.Reserva;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.SystemColor;
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JTabbedPane;
 import java.awt.Toolkit;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
-import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.Optional;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -259,6 +250,26 @@ public class Busqueda extends JFrame {
         lblBuscar.setFont(new Font("Roboto", Font.PLAIN, 18));
 
         JPanel btnEditar = new JPanel();
+        btnEditar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int filaReservas = tbReservas.getSelectedRow();
+                int filaHuespedes = tbHuespedes.getSelectedRow();
+
+                if (filaReservas >= 0) {
+                    ActualizarReserva();
+                    limpiarTabla();
+                    LlenarTablaReservas();
+                    LlenarTablaHuespedes();
+                }
+                else if (filaHuespedes >= 0) {
+                    ActualizarHuesped();
+                    limpiarTabla();
+                    LlenarTablaHuespedes();
+                    LlenarTablaReservas();
+                }
+            }
+        });
         btnEditar.setLayout(null);
         btnEditar.setBackground(new Color(12, 138, 199));
         btnEditar.setBounds(635, 508, 122, 35);
@@ -371,6 +382,38 @@ public class Busqueda extends JFrame {
 
     private List<Huesped> BuscarHuespedesId() {
         return this.huespedesController.listarHuespedesId(txtBuscar.getText());
+    }
+
+    private void ActualizarReserva() {
+        Optional.ofNullable(modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn()))
+                .ifPresentOrElse(fila -> {
+
+                    Date fechaE = Date.valueOf(modelo.getValueAt(tbReservas.getSelectedRow(), 1).toString());
+                    Date fechaS = Date.valueOf(modelo.getValueAt(tbReservas.getSelectedRow(), 2).toString());
+                    String valor = (String) modelo.getValueAt(tbReservas.getSelectedRow(), 3);
+                    String formaPago = (String) modelo.getValueAt(tbReservas.getSelectedRow(), 4);
+                    Integer id = Integer.valueOf(modelo.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+                    this.reservaController.actualizar(fechaE,fechaS, valor, formaPago, id);
+                    JOptionPane.showMessageDialog(this, String.format("Registro modificado con \u00E9xito"));
+                }, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un registro"));
+
+    }
+
+    private void ActualizarHuesped() {
+        Optional.ofNullable(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), tbHuespedes.getSelectedColumn()))
+                .ifPresentOrElse(filaHuesped -> {
+
+                    String nombre = (String) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 1);
+                    String apellido = (String) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 2);
+                    Date fechaN = Date.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 3).toString());
+                    String nacionalidad = (String) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 4);
+                    String telefono = (String) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 5);
+                    Integer idReserva = Integer.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 6).toString());
+                    Integer id = Integer.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
+                    this.huespedesController.actualizar(nombre,apellido,fechaN, nacionalidad, telefono, idReserva, id);
+                    JOptionPane.showMessageDialog(this, String.format("Registro modificado con \u00E9xito"));
+                }, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un registro"));
+
     }
 
 }
